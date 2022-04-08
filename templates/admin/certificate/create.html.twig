@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block title %}Создание статьи{% endblock %}
+{% block body %}
+    {% if showError %}
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-danger" role="alert">
+                    Не удалось создать шаблон
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <h1>Создание шаблона</h1>
+    {% include 'admin/certificate/form.html.twig' with { button_text: 'Создать'} %}
+{% endblock %}

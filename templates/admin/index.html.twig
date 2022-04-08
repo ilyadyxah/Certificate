@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Управление сертификатами{% endblock %}
+
+{% block body %}
+    <h1>Управление сертификатами ({{ pagination.totalItemCount }})</h1>
+    <a class="btn btn-success" href='{{ path('app_admin_certificates_create') }}'>Создать шаблон</a>
+    {% include 'partial/admin_certificate_filter_form.html.twig' %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Название</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for certificate in pagination %}
+            <tr>
+                <td>
+                    {{ certificate.id }}
+                </td>
+                <td>
+                    <a href="{{ path('app_admin_certificates_edit', { id: certificate.id }) }}">
+                        {{ certificate.name }}
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Нет сертификатов</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ knp_pagination_render(pagination) }}
+{% endblock %}
+

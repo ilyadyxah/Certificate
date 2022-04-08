@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block title %}Редактирование шаблона{% endblock %}
+{% block body %}
+    {% if showError %}
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-danger" role="alert">
+                    Не удалось изменить шаблон
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <h1>Редактирование шаблона</h1>
+    {% include 'admin/certificate/form.html.twig' with { button_text: 'Изменить'} %}
+{% endblock %}

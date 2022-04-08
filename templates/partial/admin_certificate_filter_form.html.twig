@@ -1,0 +1,20 @@
+<form>
+    <div class="input-group mb-3">
+        <input type="text"
+               name="name"
+               class="form-control"
+               placeholder="Найти..."
+               value="{{ app.request.query.get('name') }}"
+        >
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-outline-secondary"><i class="fa fa-search"></i></button>
+        </div>
+    </div>
+    <label for="itemOnPage" class="form-label">Количество на странице</label>
+    <select name="itemOnPage"
+            class="form-select mb-3">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">30</option>
+    </select>
+</form>

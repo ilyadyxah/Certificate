@@ -6,6 +6,7 @@ use App\Entity\Certificate;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -45,32 +46,16 @@ class CertificateRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return Certificate[] Returns an array of Certificate objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findAllWithSearchQuery(?string $search): QueryBuilder
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $qb = $this->createQueryBuilder('c');
 
-    /*
-    public function findOneBySomeField($value): ?Certificate
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        if ($search) {
+            $qb->andWhere('c.name LIKE :search')
+                ->setParameter('search', "%$search%");
+        }
+
+        return $qb
+            ->orderBy('c.updatedAt', 'DESC');
     }
-    */
 }
