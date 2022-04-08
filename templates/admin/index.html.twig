@@ -3,8 +3,8 @@
 {% block title %}Управление сертификатами{% endblock %}
 
 {% block body %}
-    <h1>Управление сертификатами ({{ pagination.totalItemCount }})</h1>
-    <a class="btn btn-success" href='{{ path('app_admin_certificates_create') }}'>Создать шаблон</a>
+    <h1>Управление сертификатами ({{ pagination.totalItemCount }})</h1><br>
+    <a class="btn btn-success" href='{{ path('app_admin_certificates_create') }}'>Добавить</a><br><br>
     {% include 'partial/admin_certificate_filter_form.html.twig' %}
     <table class="table table-striped">
         <thead>

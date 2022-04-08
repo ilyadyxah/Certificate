@@ -39,7 +39,6 @@ class CertificateController extends AbstractController
 
         if ($this->handleFormRequest($form, $doctrine, $request)) {
 
-            $this->addFlash('flash_message', 'Статья создана');
             return $this->redirectToRoute('app_admin_certificates');
         }
 
@@ -58,8 +57,7 @@ class CertificateController extends AbstractController
 
         if ($certificate = $this->handleFormRequest($form, $doctrine, $request)) {
 
-            $this->addFlash('flash_message', 'Шаблон изменён');
-            return $this->redirectToRoute('app_admin_certificate_edit', [
+            return $this->redirectToRoute('app_admin_certificates', [
                 'id' => $certificate->getId(),
             ]);
         }
