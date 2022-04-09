@@ -1,6 +1,12 @@
 {{ form_start(certificateForm) }}
 
-    {{ form_row(certificateForm.name, { label: 'Название шаблона' }) }}
+    {{ form_row(certificateForm.title, { label: 'Название шаблона' }) }}
+
+    {% if certificateForm.vars.data.filename %}
+        <p>Текущий файл <a href="{{ uploaded_asset('certificate_uploads', certificateForm.vars.data.filename)}}" target="_blank">{{ certificateForm.vars.data.filename }}</a></p>
+
+    {% endif %}
+    {{ form_row(certificateForm.file, { label: 'Загрузка файла' }) }}
 
 <button type="submit" class="btn btn-primary">{{ button_text }}</button>
 {{ form_end(certificateForm) }}

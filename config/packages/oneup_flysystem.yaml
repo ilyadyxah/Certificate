@@ -1,0 +1,9 @@
+# Read the documentation: https://github.com/1up-lab/OneupFlysystemBundle
+oneup_flysystem:
+    adapters:
+        uploads_certificates_adapter:
+            local:
+                location: '%kernel.project_dir%/public/%certificate_uploads%'
+    filesystems:
+        uploads_certificates:
+            adapter: uploads_certificates_adapter

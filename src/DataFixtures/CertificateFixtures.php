@@ -19,7 +19,7 @@ class CertificateFixtures extends Fixture
         $this->manager = $manager;
         $this->createMany(Certificate::class, 25, function (Certificate $entity) use ($manager) {
             $entity
-                ->setName($this->faker->text(30));
+                ->setTitle($this->faker->text(30));
         });
 
         $manager->flush();
