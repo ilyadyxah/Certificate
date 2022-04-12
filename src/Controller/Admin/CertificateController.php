@@ -5,7 +5,11 @@ namespace App\Controller\Admin;
 use App\Entity\Certificate;
 use App\Form\CertificateFormType;
 use App\Repository\CertificateRepository;
+use App\Service\ConverterInterface;
 use App\Service\FileUploader;
+use App\Service\PdfCreatorFromImage;
+use App\Service\PdfToWordConverter;
+use App\Service\ReplaceContent;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,10 +20,31 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CertificateController extends AbstractController
 {
+    private ConverterInterface $pdfConverter;
+    private ReplaceContent $replaceContent;
+    private FileUploader $fileUploader;
+    private PdfCreatorFromImage $pdfCreatorFromImage;
+
+    public function __construct(
+        ConverterInterface $pdfConverter,
+        ReplaceContent     $replaceContent,
+        PdfCreatorFromImage $pdfCreatorFromImage,
+        FileUploader       $fileUploader)
+    {
+        $this->pdfConverter = $pdfConverter;
+        $this->replaceContent = $replaceContent;
+        $this->fileUploader = $fileUploader;
+        $this->pdfCreatorFromImage = $pdfCreatorFromImage;
+    }
+
     /**
      * @Route("/admin/certificates", name="app_admin_certificates")
      */
-    public function index(Request $request, CertificateRepository $certificateRepository, PaginatorInterface $paginator)
+    public function index(
+        Request               $request,
+        CertificateRepository $certificateRepository,
+        PaginatorInterface    $paginator
+    )
     {
         $pagination = $paginator->paginate(
             $certificateRepository->findAllWithSearchQuery($request->query->get('title')),
@@ -35,11 +60,13 @@ class CertificateController extends AbstractController
     /**
      * @Route("/admin/certificates/create", name="app_admin_certificates_create")
      */
-    public function create(ManagerRegistry $doctrine, Request $request, FileUploader $fileUploader)
+    public function create(
+        ManagerRegistry $doctrine,
+        Request         $request)
     {
         $form = $this->createForm(CertificateFormType::class, new Certificate());
 
-        if ($this->handleFormRequest($form, $doctrine, $request, $fileUploader)) {
+        if ($this->handleFormRequest($form, $doctrine, $request)) {
 
             return $this->redirectToRoute('app_admin_certificates');
         }
@@ -53,11 +80,14 @@ class CertificateController extends AbstractController
     /**
      * @Route("/admin/certificates/{id}/edit", name="app_admin_certificates_edit")
      */
-    public function edit(Certificate $certificate, ManagerRegistry $doctrine, Request $request, FileUploader $fileUploader)
+    public function edit(
+        Certificate     $certificate,
+        ManagerRegistry $doctrine,
+        Request         $request)
     {
         $form = $this->createForm(CertificateFormType::class, $certificate);
 
-        if ($certificate = $this->handleFormRequest($form, $doctrine, $request, $fileUploader)) {
+        if ($certificate = $this->handleFormRequest($form, $doctrine, $request)) {
 
             return $this->redirectToRoute('app_admin_certificates', [
                 'id' => $certificate->getId(),
@@ -70,7 +100,11 @@ class CertificateController extends AbstractController
         ]);
     }
 
-    public function handleFormRequest(FormInterface $form, ManagerRegistry $doctrine, Request $request, FileUploader $fileUploader): ?Certificate
+    public function handleFormRequest(
+        FormInterface   $form,
+        ManagerRegistry $doctrine,
+        Request         $request
+    ): ?Certificate
     {
         $form->handleRequest($request);
 
@@ -82,7 +116,26 @@ class CertificateController extends AbstractController
             $file = $form->get('file')->getData();
 
             if ($file) {
-                $certificate->setFilename($fileUploader->uploadFile($file, $certificate->getFilename()));
+                $fileName = $this->fileUploader->uploadFile($file, $certificate->getFilename());
+
+                if ($file->guessExtension() == 'pdf') {
+                    $fileName = $this->pdfConverter->convert($fileName);
+                }
+
+                if ($file->guessExtension() == 'pdf' || $file->guessExtension() == 'docx') {
+                    $fileName = $this->replaceContent->replace(
+                        $fileName,
+                        $this->getParameter('certificate_uploads_dir'),
+                        $this->getParameter('certificate_replaced_dir')
+                    );
+                }
+                if ($file->guessExtension() == 'jpg') {
+                    $fileName = $this->pdfCreatorFromImage->create(
+                        $fileName
+                    );
+                }
+
+                $certificate->setFilename($fileName);
             }
 
             $em = $doctrine->getManager();

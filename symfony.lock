@@ -95,17 +95,29 @@
     "doctrine/sql-formatter": {
         "version": "1.1.2"
     },
+    "dompdf/dompdf": {
+        "version": "v1.2.1"
+    },
     "egulias/email-validator": {
         "version": "3.1.2"
+    },
+    "fakerphp/faker": {
+        "version": "v1.19.0"
     },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.7"
     },
-    "fzaninotto/faker": {
-        "version": "v1.9.2"
-    },
     "gedmo/doctrine-extensions": {
         "version": "v3.6.0"
+    },
+    "illuminate/config": {
+        "version": "v5.8.36"
+    },
+    "illuminate/contracts": {
+        "version": "v5.8.36"
+    },
+    "illuminate/support": {
+        "version": "v5.8.36"
     },
     "knplabs/knp-components": {
         "version": "v3.5.0"
@@ -116,14 +128,29 @@
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
+    "laminas/laminas-escaper": {
+        "version": "2.10.0"
+    },
     "league/flysystem": {
         "version": "2.4.3"
     },
     "league/mime-type-detection": {
         "version": "1.9.0"
     },
+    "mnvx/lowrapper": {
+        "version": "1.0.8"
+    },
     "monolog/monolog": {
         "version": "2.4.0"
+    },
+    "mpdf/mpdf": {
+        "version": "v8.0.17"
+    },
+    "myclabs/deep-copy": {
+        "version": "1.11.0"
+    },
+    "ncjoes/poppler-php": {
+        "version": "v1.1.0"
     },
     "nesbot/carbon": {
         "version": "2.57.0"
@@ -143,6 +170,15 @@
             "./config/packages/oneup_flysystem.yaml"
         ]
     },
+    "paragonie/random_compat": {
+        "version": "v9.99.100"
+    },
+    "phenx/php-font-lib": {
+        "version": "0.5.4"
+    },
+    "phenx/php-svg-lib": {
+        "version": "0.4.1"
+    },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
     },
@@ -151,6 +187,9 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "1.6.1"
+    },
+    "phpoffice/phpword": {
+        "version": "0.18.3"
     },
     "phpstan/phpdoc-parser": {
         "version": "1.4.2"
@@ -170,6 +209,12 @@
     "psr/log": {
         "version": "1.1.4"
     },
+    "psr/simple-cache": {
+        "version": "1.0.1"
+    },
+    "sabberworm/php-css-parser": {
+        "version": "8.4.0"
+    },
     "sensio/framework-extra-bundle": {
         "version": "6.2",
         "recipe": {
@@ -181,6 +226,18 @@
         "files": [
             "./config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "setasign/fpdf": {
+        "version": "1.8.4"
+    },
+    "setasign/fpdi": {
+        "version": "v2.3.6"
+    },
+    "smalot/pdfparser": {
+        "version": "v2.1.0"
+    },
+    "spatie/pdf-to-text": {
+        "version": "1.51"
     },
     "stof/doctrine-extensions-bundle": {
         "version": "1.7",
@@ -586,6 +643,39 @@
     },
     "symfony/yaml": {
         "version": "v5.4.3"
+    },
+    "tecnickcom/tc-lib-barcode": {
+        "version": "1.17.11"
+    },
+    "tecnickcom/tc-lib-color": {
+        "version": "1.14.10"
+    },
+    "tecnickcom/tc-lib-file": {
+        "version": "1.7.11"
+    },
+    "tecnickcom/tc-lib-pdf": {
+        "version": "8.0.6"
+    },
+    "tecnickcom/tc-lib-pdf-encrypt": {
+        "version": "1.6.7"
+    },
+    "tecnickcom/tc-lib-pdf-font": {
+        "version": "1.9.6"
+    },
+    "tecnickcom/tc-lib-pdf-graph": {
+        "version": "1.5.6"
+    },
+    "tecnickcom/tc-lib-pdf-image": {
+        "version": "1.3.7"
+    },
+    "tecnickcom/tc-lib-pdf-page": {
+        "version": "2.5.6"
+    },
+    "tecnickcom/tc-lib-unicode": {
+        "version": "1.4.7"
+    },
+    "tecnickcom/tc-lib-unicode-data": {
+        "version": "1.7.6"
     },
     "twig/extra-bundle": {
         "version": "v3.3.8"

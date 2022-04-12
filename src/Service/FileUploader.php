@@ -58,7 +58,6 @@ class FileUploader
                 throw new \Exception("Ошибка удаления файла: $oldFileName");
             }
         }
-
         return $fileName;
     }
 

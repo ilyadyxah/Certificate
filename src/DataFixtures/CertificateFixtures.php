@@ -16,17 +16,18 @@ class CertificateFixtures extends Fixture
     protected ObjectManager $manager;
     private FileUploader $fileUploader;
 
-    private static array $files = [ // Имитация
-        'file-1.pdf',
-        'file-2.pdf',
-        'file-3.pdf',
-        'file-4.pdf',
-        'file-5.pdf',
-    ];
+    private static array $files = [];
 
     public function __construct(FileUploader $fileUploader)
     {
         $this->fileUploader = $fileUploader;
+
+        $filesInDirrectory = scandir(dirname(dirname(__DIR__)) . '/public/files/final');
+        foreach ($filesInDirrectory as $file) {
+            if ($file != '.' && $file != '..') {
+                self::$files[] = $file;
+            }
+        }
     }
 
     public function load(ObjectManager $manager): void
@@ -39,7 +40,7 @@ class CertificateFixtures extends Fixture
             $fileName = $this->faker->randomElement(self::$files);
             $entity
                 ->setTitle($this->faker->text(30))
-                ->setFilename($this->fileUploader->uploadFile(new File(dirname(dirname(__DIR__)) . '/public/files/' . $fileName)));
+                ->setFilename($this->fileUploader->uploadFile(new File(dirname(dirname(__DIR__)) . '/public/files/final/' . $fileName)));
         });
 
         $manager->flush();

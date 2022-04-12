@@ -11,6 +11,7 @@
         <tr>
             <th>Id</th>
             <th>Название</th>
+            <th>Файл</th>
         </tr>
         </thead>
         <tbody>
@@ -23,6 +24,9 @@
                     <a href="{{ path('app_admin_certificates_edit', { id: certificate.id }) }}">
                         {{ certificate.title }}
                     </a>
+                </td>
+                <td>
+                    <a href="{{ uploaded_asset('certificate_final', certificate.fileName)}}" target="_blank">{{ certificate.fileName }}</a>
                 </td>
             </tr>
         {% else %}
