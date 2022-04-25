@@ -2,6 +2,9 @@
     "behat/transliterator": {
         "version": "v1.5.0"
     },
+    "box/spout": {
+        "version": "v3.3.0"
+    },
     "doctrine/annotations": {
         "version": "1.13",
         "recipe": {

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block title %}Импорт сертификатов{% endblock %}
+{% block body %}
+    {% if showError %}
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-danger" role="alert">
+                    Не удалось импортировать из файла
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <h1>Импорт из файла</h1>
+    {% include 'admin/certificate/import_form.html.twig' with { button_text: 'Импортировать'} %}
+{% endblock %}

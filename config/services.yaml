@@ -49,5 +49,15 @@ services:
         arguments:
             $pathInputFile: '%certificate_uploads%'
             $pathOutputFile: '%certificate_final%'
+
+    App\Service\ImportFromXlsService:
+        arguments:
+            $pathInputFile: '%certificate_uploads%'
+            $titleField: '%env(TITLEFIELD)%'
+            $fileField: '%env(FILEFIELD)%'
+    App\Service\ReplaceContent:
+        arguments:
+            $pathInputFile: '%certificate_uploads_dir%'
+            $pathOutputFile: '%certificate_replaced_dir%'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

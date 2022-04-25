@@ -7,6 +7,7 @@ use App\Form\CertificateFormType;
 use App\Repository\CertificateRepository;
 use App\Service\ConverterInterface;
 use App\Service\FileUploader;
+use App\Service\ImportFromXlsService;
 use App\Service\PdfCreatorFromImage;
 use App\Service\PdfToWordConverter;
 use App\Service\ReplaceContent;
@@ -26,10 +27,10 @@ class CertificateController extends AbstractController
     private PdfCreatorFromImage $pdfCreatorFromImage;
 
     public function __construct(
-        ConverterInterface $pdfConverter,
-        ReplaceContent     $replaceContent,
+        ConverterInterface  $pdfConverter,
+        ReplaceContent      $replaceContent,
         PdfCreatorFromImage $pdfCreatorFromImage,
-        FileUploader       $fileUploader)
+        FileUploader        $fileUploader)
     {
         $this->pdfConverter = $pdfConverter;
         $this->replaceContent = $replaceContent;
@@ -43,7 +44,8 @@ class CertificateController extends AbstractController
     public function index(
         Request               $request,
         CertificateRepository $certificateRepository,
-        PaginatorInterface    $paginator
+        PaginatorInterface    $paginator,
+        ImportFromXlsService $fromXls
     )
     {
         $pagination = $paginator->paginate(
@@ -123,11 +125,7 @@ class CertificateController extends AbstractController
                 }
 
                 if ($file->guessExtension() == 'pdf' || $file->guessExtension() == 'docx') {
-                    $fileName = $this->replaceContent->replace(
-                        $fileName,
-                        $this->getParameter('certificate_uploads_dir'),
-                        $this->getParameter('certificate_replaced_dir')
-                    );
+                    $fileName = $this->replaceContent->replace($fileName);
                 }
                 if ($file->guessExtension() == 'jpg') {
                     $fileName = $this->pdfCreatorFromImage->create(

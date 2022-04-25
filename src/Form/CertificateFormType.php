@@ -23,7 +23,11 @@ class CertificateFormType extends AbstractType
         $fileConstrains = [
             new File([
                 'maxSize' => '10M',
-                'maxSizeMessage' => 'Файл слишком большой. Максимальный размер 20 МБ'
+                'maxSizeMessage' => 'Файл слишком большой. Максимальный размер 20 МБ',
+                'mimeTypes' => [
+                    'application/pdf',
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                ]
             ]),
         ];
 
@@ -51,7 +55,7 @@ class CertificateFormType extends AbstractType
                 'required' => false,
                 'constraints' => $fileConstrains
 
-            ]);;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

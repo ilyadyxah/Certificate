@@ -13,15 +13,15 @@ class PdfToWordConverter implements ConverterInterface
         $this->pathOutputFile = $pathOutputFile;
     }
 
-    public function convert(string $fileName): string
+    public function convert(string $fileName, string $pathInputFile = null): string
     {
         // Для конвертирования в pdf to word используется внешняя программа LibreOffice.
         // Старый формат .doc - не поддерживается библиотекой PhpWord
-
+        $pathInputFile = $pathInputFile ?: $this->pathInputFile;
         $command = 'soffice --headless --infilter="writer_pdf_import" --convert-to docx --outdir ' .
             $this->pathOutputFile .
             ' ' .
-            $this->pathInputFile . $fileName;
+            $pathInputFile . $fileName;
         shell_exec($command);
 
         return pathinfo($fileName)['filename'] . '.docx';
